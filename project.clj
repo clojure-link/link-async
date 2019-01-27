@@ -5,5 +5,6 @@
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [link "0.12.2"]
-                 [org.clojure/core.async "0.4.490"]]
+                 [org.clojure/core.async "0.4.490"]
+                 [org.clojure/tools.logging "0.4.1"]]
   :repl-options {:init-ns link-async.core})
