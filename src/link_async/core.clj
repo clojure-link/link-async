@@ -2,12 +2,13 @@
   (:require [link.core :as link]
             [link.tcp :as tcp]
             [clojure.tools.logging :as logging]
-            [clojure.core.async :as async]))
+            [clojure.core.async :as async])
+  (:import [link.core ClientSocketChannel]))
 
 (defprotocol IPurgatory
   (reset-state! [this] "reset initial state of purgatory")
   (get-chan [this packet] "find the right chan for packet")
-  (start-transaction! [this packet] "store core.async chan for a transaction")
+  (start-transaction! [this packet chan] "store core.async chan for a transaction")
   (end-transaction! [this packet] "end a client-server transaction")
   (terminate? [this packet] "test if the packet is a termination of a transaction"))
 
@@ -36,5 +37,16 @@
        (link/on-inactive [ch]
                          )))))
 
-(defprotocol IAsyncClient
+(defprotocol IAsyncClientChannel
   (send-async! [this msg] "Send msg to client as get a core.async chan for response"))
+
+(extend-protocol IAsyncClientChannel
+  ClientSocketChannel
+  (send-async! [this msg]
+    (let [ret-chan (async/chan)
+          cb (fn [channel-future]
+               (when-let [ch (.channel channel-future)]
+                 (when-let [purgatory (link/channel-attr-get ch channel-attr-purgatory)]
+                   (start-transaction! purgatory msg ret-chan))))]
+      (link/send!* this msg cb)
+      ret-chan))))
