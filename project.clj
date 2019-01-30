@@ -7,4 +7,6 @@
                  [link "0.12.2"]
                  [org.clojure/core.async "0.4.490"]
                  [org.clojure/tools.logging "0.4.1"]]
+  :profiles {:dev {:dependencies [[log4j/log4j "1.2.17"]]}
+             :example {:source-paths ["examples"]}}
   :repl-options {:init-ns link-async.core})
