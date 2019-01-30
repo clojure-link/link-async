@@ -16,7 +16,7 @@
 
 (defn handler-factory [purgatory-fn]
   (let [purgatory (purgatory-fn)]
-    (fn []
+    (fn [& _]
       (link/create-handler
        (link/on-active [ch]
                        (logging/debug "Channel recreated. Reset purgatory.")
@@ -49,4 +49,4 @@
                  (when-let [purgatory (link/channel-attr-get ch channel-attr-purgatory)]
                    (start-transaction! purgatory msg ret-chan))))]
       (link/send!* this msg cb)
-      ret-chan))))
+      ret-chan)))
