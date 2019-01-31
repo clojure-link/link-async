@@ -1,9 +1,9 @@
 # link-async
 
-A universal client library designed to simplify client development.
+A universal library designed to simplify link client development.
 
-Previously, the write a TCP or WebSocket client, you will put logic in
-both main thread and link handler, which made it difficult to manage.
+Previously, to write a TCP or WebSocket client, you will put logic in
+both main thread and link handler, which makes it difficult to manage.
 link-async provides you a `handler-factory` that generates proper link
 handler by given a `IPurgatory` implementation for the style of
 protocol you were using.
