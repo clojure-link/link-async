@@ -10,6 +10,7 @@
   (get-chan [this packet] "find the right chan for packet")
   (start-transaction! [this packet chan] "store core.async chan for a transaction")
   (end-transaction! [this packet] "end a client-server transaction")
+  (beginning? [this packet] "test if the packet is a beginning of a transaction")
   (terminate? [this packet] "test if the packet is a termination of a transaction"))
 
 (def channel-attr-purgatory "link.async/purgatory")
@@ -47,6 +48,7 @@
           cb (fn [channel-future]
                (when-let [ch (.channel channel-future)]
                  (when-let [purgatory (link/channel-attr-get ch channel-attr-purgatory)]
-                   (start-transaction! purgatory msg ret-chan))))]
+                   (when (beginning? purgatory msg)
+                     (start-transaction! purgatory msg ret-chan)))))]
       (link/send!* this msg cb)
       ret-chan)))

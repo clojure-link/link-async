@@ -8,7 +8,7 @@
 
   la/IPurgatory
   (reset-state! [this]
-    (reset! state []))
+    (reset! state (empty-queue)))
 
   (get-chan [this _]
     (first @state))
@@ -18,6 +18,8 @@
 
   (end-transaction! [this _]
     (swap! state pop))
+
+  (beginning? [this _] true)
 
   (terminate? [this _] true))
 
