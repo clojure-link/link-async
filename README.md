@@ -1,14 +1,21 @@
 # link-async
 
-A Clojure library designed to ... well, that part is up to you.
+A universal client library designed to simplify client development.
+
+Previously, the write a TCP or WebSocket client, you will put logic in
+both main thread and link handler, which made it difficult to manage.
+link-async provides you a `handler-factory` that generates proper link
+handler by given a `IPurgatory` implementation for the style of
+protocol you were using.
 
 ## Usage
 
-FIXME
+See
+[examples](https://github.com/clojure-link/link-async/tree/master/examples/link_async/examples).
 
 ## License
 
-Copyright © 2019 FIXME
+Copyright © 2019 Ning Sun and contributors
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
