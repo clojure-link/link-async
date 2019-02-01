@@ -28,8 +28,10 @@
         ;; actual client
         the-client (tcp/tcp-client client-factory "127.0.0.1" 8715 :lazy-connect false)
         ;; send the request and get the chan
-        the-chan (linka/send-async! the-client ["Link async example!\r\n"])]
+        the-chan (linka/send-async! the-client ["Link async example!"])
+        the-chan2 (linka/send-async! the-client ["Second frame"])]
     ;; get response from the chan
     (async/go
-      (println (async/<! the-chan)))
+      (println (async/<! the-chan))
+      (println (async/<! the-chan2)))
     (Thread/sleep 5000)))
