@@ -19,7 +19,7 @@
 
   (beginning? [this packet]
     (if-let [txn-id (txn-id-fn packet)]
-      (contains? @state txn-id)
+      (not (contains? @state txn-id))
       false))
 
   (terminate? [this packet]
