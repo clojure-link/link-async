@@ -9,4 +9,5 @@
                  [org.clojure/tools.logging "0.4.1"]]
   :profiles {:dev {:dependencies [[log4j/log4j "1.2.17"]]}
              :example {:source-paths ["examples"]}}
-  :repl-options {:init-ns link-async.core})
+  :repl-options {:init-ns link-async.core}
+  :deploy-repositories {"releases" :clojars})
