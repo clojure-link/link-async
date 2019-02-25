@@ -26,4 +26,5 @@
     (some? (txn-id-fn packet))))
 
 (defn multiplex-purgatory [txn-id-fn]
-  (MultiplexPurgatory. txn-id-fn (atom {})))
+  (fn []
+    (MultiplexPurgatory. txn-id-fn (atom {}))))
